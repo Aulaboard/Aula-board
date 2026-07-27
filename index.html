@@ -588,6 +588,9 @@
     padding:14px 0; border-bottom:1px solid var(--line);
     gap:10px;
   }
+  .di-main{display:flex; align-items:center; gap:10px; min-width:0;}
+  .di-thumb{width:44px; height:44px; border-radius:8px; object-fit:cover; flex-shrink:0; border:1px solid var(--line);}
+  .di-text{min-width:0;}
   .di-name{font-size:0.88rem; font-weight:500;}
   .di-meta{font-size:0.75rem; color:var(--ink-dim); font-family:'JetBrains Mono', monospace; margin-top:3px;}
   .di-remove{
@@ -848,6 +851,8 @@
   .pay-card .pc-icon{font-size:1.6rem; display:block; margin-bottom:6px;}
   .pay-card .pc-label{font-size:0.85rem; font-weight:600;}
   .pay-card.selected{border-color:var(--clicky); background:var(--clicky-bg);}
+  .pay-card.pay-card-disabled{opacity:0.4; cursor:not-allowed;}
+  .pay-card.pay-card-disabled:active{transform:none !important;}
 
   .order-card{
     border:1px solid var(--line); border-radius:12px;
@@ -984,13 +989,9 @@
 <section class="hero">
   <div class="hero-inner">
     <div>
-      <div class="eyebrow">MECHANICAL KEYBOARD SHOP</div>
-      <h1 class="hero-title">ແປ້ນພິມທີ່ມີ <span class="accent">AURA</span> ຂອງມັນເອງ</h1>
-      <p class="hero-desc">ຮ້ານຂາຍແປ້ນພິມ ສະວິດ ຝາແປ້ນ ແລະ ອຸປະກອນຕົກແຕ່ງໂຕະ. ເລືອກງ່າຍໆ ເບິ່ງລາຄາໄດ້ເລີຍ ບໍ່ຕ້ອງເປັນຜູ້ຊ່ຽວຊານກໍ່ຊື້ໄດ້ 🙂</p>
-      <div class="hero-cta">
-        <button class="btn-primary" onclick="document.getElementById('shop').scrollIntoView()">ເບິ່ງສິນຄ້າທັງໝົດ</button>
-        <button class="btn-ghost" onclick="document.getElementById('legend').scrollIntoView()">ສະວິດແບບໃດເໝາະກັບຂ້ອຍ?</button>
-      </div>
+      <div class="eyebrow" id="heroEyebrow">MECHANICAL KEYBOARD SHOP</div>
+      <h1 class="hero-title" id="heroTitle">ແປ້ນພິມທີ່ມີ <span class="accent">AURA</span> ຂອງມັນເອງ</h1>
+      <p class="hero-desc" id="heroDesc">ຮ້ານຂາຍແປ້ນພິມ ສະວິດ ຝາແປ້ນ ແລະ ອຸປະກອນຕົກແຕ່ງໂຕະ. ເລືອກງ່າຍໆ ເບິ່ງລາຄາໄດ້ເລີຍ ບໍ່ຕ້ອງເປັນຜູ້ຊ່ຽວຊານກໍ່ຊື້ໄດ້ 🙂</p>
     </div>
     <div class="keycap-board" id="keycapBoard" aria-hidden="true"><div class="keycap k-linear" tabindex="0">A</div><div class="keycap k-tactile" tabindex="0">U</div><div class="keycap k-clicky" tabindex="0">R</div><div class="keycap k-linear" tabindex="0">A</div><div class="keycap blank"></div><div class="keycap blank"></div><div class="keycap k-tactile" tabindex="0">A</div><div class="keycap k-clicky" tabindex="0">U</div><div class="keycap k-linear" tabindex="0">R</div><div class="keycap k-tactile" tabindex="0">A</div></div>
   </div>
@@ -998,10 +999,10 @@
 
 <section class="legend" id="legend">
   <div class="legend-inner">
-    <span class="legend-title mono">ສະວິດແຕ່ລະແບບຕ່າງກັນແນວໃດ?</span>
-    <span class="legend-item"><span class="legend-dot linear"></span>😌 Linear — ກົດແລ້ວລື່ນໆ ງຽບ</span>
-    <span class="legend-item"><span class="legend-dot tactile"></span>👆 Tactile — ກົດແລ້ວຮູ້ສຶກສະດຸດໜ້ອຍໆ</span>
-    <span class="legend-item"><span class="legend-dot clicky"></span>🔊 Clicky — ກົດແລ້ວມີສຽງດັງແກັກໆ</span>
+    <span class="legend-title mono" id="legendTitle">ສະວິດແຕ່ລະແບບຕ່າງກັນແນວໃດ?</span>
+    <span class="legend-item"><span class="legend-dot linear"></span><span id="legendLinear">😌 Linear — ກົດແລ້ວລື່ນໆ ງຽບ</span></span>
+    <span class="legend-item"><span class="legend-dot tactile"></span><span id="legendTactile">👆 Tactile — ກົດແລ້ວຮູ້ສຶກສະດຸດໜ້ອຍໆ</span></span>
+    <span class="legend-item"><span class="legend-dot clicky"></span><span id="legendClicky">🔊 Clicky — ກົດແລ້ວມີສຽງດັງແກັກໆ</span></span>
   </div>
 </section>
 
@@ -1684,6 +1685,37 @@
 <div class="modal-overlay" id="shopInfoModalOverlay">
   <div class="modal">
     <h3>🏬 ແກ້ໄຂຂໍ້ມູນຮ້ານ</h3>
+    <div class="oc-section-title">ຂໍ້ຄວາມໜ້າຫຼັກ (Hero)</div>
+    <div class="field">
+      <label>ຂໍ້ຄວາມນຳ (ເລັກໆ ດ້ານເທິງ)</label>
+      <input type="text" id="siHeroEyebrow" placeholder="ຕົວຢ່າງ: MECHANICAL KEYBOARD SHOP">
+    </div>
+    <div class="field">
+      <label>ຫົວຂໍ້ໃຫຍ່ (ຄຳວ່າ AURA ຈະຖືກເນັ້ນສີໃຫ້ອັດຕະໂນມັດ)</label>
+      <input type="text" id="siHeroTitle" placeholder="ຕົວຢ່າງ: ແປ້ນພິມທີ່ມີ AURA ຂອງມັນເອງ">
+    </div>
+    <div class="field">
+      <label>ຄຳອະທິບາຍສັ້ນໆ</label>
+      <textarea id="siHeroDesc" placeholder="ອະທິບາຍຮ້ານສັ້ນໆ"></textarea>
+    </div>
+    <div class="oc-section-title">ຂໍ້ຄວາມອະທິບາຍສະວິດ</div>
+    <div class="field">
+      <label>ຫົວຂໍ້ຫົວຂໍ້ ຄຳຖາມ</label>
+      <input type="text" id="siLegendTitle" placeholder="ຕົວຢ່າງ: ສະວິດແຕ່ລະແບບຕ່າງກັນແນວໃດ?">
+    </div>
+    <div class="field">
+      <label>Linear</label>
+      <input type="text" id="siLegendLinear" placeholder="ຕົວຢ່າງ: 😌 Linear — ກົດແລ້ວລື່ນໆ ງຽບ">
+    </div>
+    <div class="field">
+      <label>Tactile</label>
+      <input type="text" id="siLegendTactile" placeholder="ຕົວຢ່າງ: 👆 Tactile — ກົດແລ້ວຮູ້ສຶກສະດຸດໜ້ອຍໆ">
+    </div>
+    <div class="field">
+      <label>Clicky</label>
+      <input type="text" id="siLegendClicky" placeholder="ຕົວຢ່າງ: 🔊 Clicky — ກົດແລ້ວມີສຽງດັງແກັກໆ">
+    </div>
+    <div class="oc-section-title">ຂໍ້ມູນຕິດຕໍ່ຮ້ານ</div>
     <div class="field">
       <label>ເວລາເປີດ-ປິດຮ້ານ</label>
       <input type="text" id="siHours" placeholder="ຕົວຢ່າງ: ເປີດທຸກມື້ 10:00–20:00">
@@ -2132,7 +2164,14 @@
   "bankAccNo": "1001215656492",
   "terms": "ເຄື່ອງເປັນເຄື່ອງພີອໍເດິ 8-12ມື້ ບາງເຄື່ອງກະພ້ອມສົ່ງ\n(ໃນອານາຄົດແອັດກະຢາກໃຫ້ມີເຄື່ອງພ້ອມສົ່ງທຸກຢ່າງແຕ່ຕອນນິແອັດຍັງບໍ່ມີງົບເທື່ອ ຝາກຊັບພ໋ອດແອັດແນ່ເດີ)",
   "gaId": "",
-  "qrImage": "images/img-021-d948d59ca17d.jpg"
+  "qrImage": "images/img-021-d948d59ca17d.jpg",
+  "heroEyebrow": "MECHANICAL KEYBOARD SHOP",
+  "heroTitle": "ແປ້ນພິມທີ່ມີ AURA ຂອງມັນເອງ",
+  "heroDesc": "ຮ້ານຂາຍແປ້ນພິມ ສະວິດ ຝາແປ້ນ ແລະ ອຸປະກອນຕົກແຕ່ງໂຕະ. ເລືອກງ່າຍໆ ເບິ່ງລາຄາໄດ້ເລີຍ ບໍ່ຕ້ອງເປັນຜູ້ຊ່ຽວຊານກໍ່ຊື້ໄດ້ 🙂",
+  "legendTitle": "ສະວິດແຕ່ລະແບບຕ່າງກັນແນວໃດ?",
+  "legendLinear": "😌 Linear — ກົດແລ້ວລື່ນໆ ງຽບ",
+  "legendTactile": "👆 Tactile — ກົດແລ້ວຮູ້ສຶກສະດຸດໜ້ອຍໆ",
+  "legendClicky": "🔊 Clicky — ກົດແລ້ວມີສຽງດັງແກັກໆ"
 }</script>
 <script>
 const STORAGE_KEY = 'aura_board_products_v1';
@@ -2186,6 +2225,27 @@ function socialUrl(kind, value){
   if(/^https?:\/\//i.test(value)) return value;
   const handle = value.replace(/^@/,'').trim();
   return kind==='facebook' ? `https://facebook.com/${handle}` : `https://instagram.com/${handle}`;
+}
+function renderHero(){
+  const eyebrowEl = document.getElementById('heroEyebrow');
+  if(eyebrowEl) eyebrowEl.textContent = shopInfo.heroEyebrow || '';
+  const titleEl = document.getElementById('heroTitle');
+  if(titleEl){
+    const titleText = shopInfo.heroTitle || '';
+    // auto-highlight every occurrence of "AURA" in the brand accent color,
+    // so the shop owner can freely edit the wording without losing the style
+    titleEl.innerHTML = esc(titleText).replace(/AURA/gi, m => `<span class="accent">${m}</span>`);
+  }
+  const descEl = document.getElementById('heroDesc');
+  if(descEl) descEl.textContent = shopInfo.heroDesc || '';
+  const legendTitleEl = document.getElementById('legendTitle');
+  if(legendTitleEl) legendTitleEl.textContent = shopInfo.legendTitle || '';
+  const legendLinearEl = document.getElementById('legendLinear');
+  if(legendLinearEl) legendLinearEl.textContent = shopInfo.legendLinear || '';
+  const legendTactileEl = document.getElementById('legendTactile');
+  if(legendTactileEl) legendTactileEl.textContent = shopInfo.legendTactile || '';
+  const legendClickyEl = document.getElementById('legendClicky');
+  if(legendClickyEl) legendClickyEl.textContent = shopInfo.legendClicky || '';
 }
 function renderFooter(){
   const parts = [];
@@ -2477,9 +2537,12 @@ function updateCartUI(){
       total += p.price * qty;
       return `
         <div class="drawer-item">
-          <div>
-            <div class="di-name">${p.name}</div>
-            <div class="di-meta">${qty} x ${p.price.toLocaleString('lo-LA')} ກີບ</div>
+          <div class="di-main">
+            ${p.image ? `<img class="di-thumb" src="${p.image}" alt="">` : ''}
+            <div class="di-text">
+              <div class="di-name">${p.name}</div>
+              <div class="di-meta">${qty} x ${p.price.toLocaleString('lo-LA')} ກີບ</div>
+            </div>
           </div>
           <button class="di-remove" data-id="${id}">ລຶບ</button>
         </div>
@@ -2735,6 +2798,14 @@ function saveOrderToHistory(order){
 
 function renderCheckoutStepForm(){
   const savedInfo = loadCustomerInfo();
+  const ids = Object.keys(cart).filter(id => cart[id] > 0);
+  const cartTotal = ids.reduce((sum,id)=>{
+    const p = products.find(x=>x.id===Number(id));
+    return sum + (p ? p.price*cart[id] : 0);
+  }, 0);
+  const DEPOSIT_LIMIT = 500000;
+  const codAllowed = cartTotal < DEPOSIT_LIMIT;
+  if(!codAllowed) checkoutPayMethod = 'qr'; // force full QR payment for large orders
   checkoutModalBody.innerHTML = `
     <h3>🧾 ຢືນຢັນຄຳສັ່ງຊື້</h3>
     <div class="field">
@@ -2757,11 +2828,12 @@ function renderCheckoutStepForm(){
           <span class="pc-icon">🏦</span>
           <span class="pc-label">ໂອນຜ່ານ QR</span>
         </div>
-        <div class="pay-card" id="payCodCard">
-          <span class="pc-icon">💵</span>
+        <div class="pay-card${codAllowed ? '' : ' pay-card-disabled'}" id="payCodCard"${codAllowed ? '' : ' aria-disabled="true"'}>
+          <span class="pc-icon">${codAllowed ? '💵' : '🚫'}</span>
           <span class="pc-label">ເກັບເງິນປາຍທາງ</span>
         </div>
       </div>
+      ${!codAllowed ? `<div style="font-size:0.78rem; color:var(--ink-dim); margin-top:8px;">ຍອດສັ່ງຊື້ ${DEPOSIT_LIMIT.toLocaleString('lo-LA')} ກີບຂຶ້ນໄປ ຕ້ອງຊຳລະຜ່ານ QR ເຕັມຈຳນວນເທົ່ານັ້ນ (ບໍ່ສາມາດມັດຈຳ/ເກັບປາຍທາງໄດ້)</div>` : ''}
     </div>
     <div class="field" id="depositField" style="display:none;">
       <label>ມັດຈຳກ່ອນຈັດສົ່ງ (ໂອນກ່ອນ ສ່ວນທີ່ເຫຼືອຈ່າຍປາຍທາງ)</label>
@@ -2799,6 +2871,7 @@ function renderCheckoutStepForm(){
     document.getElementById('depositField').style.display = 'none';
   });
   document.getElementById('payCodCard').addEventListener('click', ()=>{
+    if(!codAllowed){ showToast(`ຍອດ ${DEPOSIT_LIMIT.toLocaleString('lo-LA')} ກີບຂຶ້ນໄປ ຕ້ອງຊຳລະຜ່ານ QR ເຕັມຈຳນວນເທົ່ານັ້ນ`); return; }
     checkoutPayMethod = 'cod';
     document.getElementById('payCodCard').classList.add('selected');
     document.getElementById('payQrCard').classList.remove('selected');
@@ -3028,6 +3101,13 @@ document.getElementById('modalSave').addEventListener('click', ()=>{
 const shopInfoModalOverlay = document.getElementById('shopInfoModalOverlay');
 let pendingQrImage = null;
 document.getElementById('shopInfoBtn').addEventListener('click', ()=>{
+  document.getElementById('siHeroEyebrow').value = shopInfo.heroEyebrow || '';
+  document.getElementById('siHeroTitle').value = shopInfo.heroTitle || '';
+  document.getElementById('siHeroDesc').value = shopInfo.heroDesc || '';
+  document.getElementById('siLegendTitle').value = shopInfo.legendTitle || '';
+  document.getElementById('siLegendLinear').value = shopInfo.legendLinear || '';
+  document.getElementById('siLegendTactile').value = shopInfo.legendTactile || '';
+  document.getElementById('siLegendClicky').value = shopInfo.legendClicky || '';
   document.getElementById('siHours').value = shopInfo.hours || '';
   document.getElementById('siPhone').value = shopInfo.phone || '';
   document.getElementById('siFacebook').value = shopInfo.facebook || '';
@@ -3069,9 +3149,17 @@ document.getElementById('siSave').addEventListener('click', ()=>{
     terms: document.getElementById('siTerms').value.trim(),
     gaId: document.getElementById('siGaId').value.trim(),
     qrImage: pendingQrImage || shopInfo.qrImage || null,
+    heroEyebrow: document.getElementById('siHeroEyebrow').value.trim(),
+    heroTitle: document.getElementById('siHeroTitle').value.trim(),
+    heroDesc: document.getElementById('siHeroDesc').value.trim(),
+    legendTitle: document.getElementById('siLegendTitle').value.trim(),
+    legendLinear: document.getElementById('siLegendLinear').value.trim(),
+    legendTactile: document.getElementById('siLegendTactile').value.trim(),
+    legendClicky: document.getElementById('siLegendClicky').value.trim(),
   };
   saveShopInfo();
   renderFooter();
+  renderHero();
   loadGoogleAnalytics();
   closeShopInfoModal();
   showToast('ບັນທຶກຂໍ້ມູນຮ້ານແລ້ວ ✅');
@@ -3500,6 +3588,7 @@ renderFilters();
 renderProducts();
 updateCartUI();
 renderFooter();
+renderHero();
 loadGoogleAnalytics();
 
 const searchInputEl = document.getElementById('searchInput');
