@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jxl55354766-star.github.io/Aula-board/sitemap.xml
