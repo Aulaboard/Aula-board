@@ -513,7 +513,11 @@
     color:var(--ink-dim); text-transform:uppercase;
   }
   .card-name{font-size:1.08rem; font-weight:700; line-height:1.5;}
-  .card-desc{font-size:0.92rem; color:var(--ink-dim); flex:1;}
+  .card-desc{
+    font-size:0.92rem; color:var(--ink-dim); flex:1;
+    display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical;
+    overflow:hidden; text-overflow:ellipsis;
+  }
   .switch-tag{
     display:inline-flex; align-items:center; gap:6px;
     font-family:'JetBrains Mono', monospace;
