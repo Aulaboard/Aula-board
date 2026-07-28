@@ -2,7 +2,7 @@
 <html lang="lo" class=""><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AURA BOARD | ຮ້ານຄີບອດແລະອຸປະກອນເສີມ</title>
+<title>AURA BOARD | ຮ້ານແປ້ນພິມແລະອຸປະກອນເສີມ</title>
 <meta name="description" content="AURA BOARD ຮ້ານຂາຍແປ້ນພິມກົນຈັກ ສະວິດ ຝາແປ້ນ ແລະ ອຸປະກອນຕົກແຕ່ງໂຕະ ຄຸນນະພາບດີ ລາຄາຍ່ອມເຍົາ ສັ່ງຊື້ອອນລາຍໄດ້ງ່າຍໆ ຈັດສົ່ງທົ່ວປະເທດລາວ">
 <link rel="canonical" href="https://jxl55354766-star.github.io/Aula-board/">
 <link rel="icon" type="image/png" href="images/img-001-e9e19006c057.png">
@@ -34,7 +34,7 @@
   "name": "AURA BOARD",
   "image": "https://jxl55354766-star.github.io/Aula-board/icon-512.png",
   "url": "https://jxl55354766-star.github.io/Aula-board/",
-  "description": "ຮ້ານຂາຍຄີບອດ ຄີແຄັບ ເມົ້າ ແລະ ອຸປະກອນຕົກແຕ່ງໂຕະ",
+  "description": "ຮ້ານຂາຍແປ້ນພິມກົນຈັກ ສະວິດ ຝາແປ້ນ ແລະ ອຸປະກອນຕົກແຕ່ງໂຕະ",
   "telephone": "+856 20 95633876",
   "priceRange": "₭₭",
   "areaServed": "LA"
@@ -385,6 +385,68 @@
     overflow:hidden;
     display:flex; flex-direction:column;
     transition:border-color .18s ease, transform .18s ease;
+    cursor:pointer;
+  }
+
+  /* ---------- PRODUCT DETAIL PAGE ---------- */
+  .product-page{
+    position:fixed; inset:0; z-index:200;
+    background:var(--bg);
+    display:none; flex-direction:column;
+  }
+  .product-page.open{display:flex;}
+  .pp-header{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 16px; border-bottom:1px solid var(--line);
+    background:var(--bg); flex-shrink:0;
+    padding-top:calc(14px + env(safe-area-inset-top));
+  }
+  .pp-header-actions{display:flex; gap:8px;}
+  .pp-icon-btn{
+    width:40px; height:40px; border-radius:50%;
+    background:var(--surface-2); border:1px solid var(--line);
+    color:var(--ink); font-size:1.1rem;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+  }
+  .pp-icon-btn.active{color:var(--linear); border-color:var(--linear);}
+  .pp-scroll{flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch;}
+  .pp-media{
+    position:relative; width:100%; aspect-ratio:1/1;
+    background:var(--surface-2); border-bottom:1px solid var(--line);
+  }
+  .pp-media img{width:100%; height:100%; object-fit:cover; display:block;}
+  .pp-media .stock-tag{position:absolute; top:12px; left:12px; z-index:2;}
+  .pp-body{padding:18px 16px; display:flex; flex-direction:column; gap:10px;}
+  .pp-cat{
+    font-family:'JetBrains Mono', monospace; font-size:0.74rem;
+    letter-spacing:0.06em; color:var(--ink-dim); text-transform:uppercase;
+  }
+  .pp-name{font-size:1.25rem; font-weight:700; line-height:1.4;}
+  .pp-price-row{display:flex; align-items:center; gap:12px;}
+  .pp-price-row .price{font-size:1.5rem;}
+  .pp-section-title{
+    font-weight:700; font-size:0.95rem; margin-top:8px;
+    padding-top:14px; border-top:1px solid var(--line);
+  }
+  .pp-desc{font-size:0.94rem; color:var(--ink-dim); line-height:1.7; white-space:pre-line;}
+  .pp-related{border-top:8px solid var(--surface-2); padding-bottom:8px;}
+  .pp-footer{
+    display:flex; align-items:center; gap:10px;
+    padding:12px 16px; border-top:1px solid var(--line);
+    background:var(--bg); flex-shrink:0;
+    padding-bottom:calc(12px + env(safe-area-inset-bottom));
+  }
+  .pp-qty{
+    display:flex; align-items:center; gap:0;
+    border:1px solid var(--line); border-radius:8px; overflow:hidden; flex-shrink:0;
+  }
+  .pp-qty button{
+    width:38px; height:44px; background:var(--surface-2); border:none;
+    color:var(--ink); font-size:1.1rem; cursor:pointer;
+  }
+  .pp-qty span{
+    width:34px; text-align:center; font-family:'JetBrains Mono', monospace; font-weight:700;
   }
   .card-media{
     aspect-ratio:4/3;
@@ -503,20 +565,19 @@
   }
   .star-select button.active{color:#e8b84b;}
   .card-body{
-    padding:16px 16px 18px;
-    display:flex; flex-direction:column; gap:10px;
-    flex:1;
+    padding:10px 12px 12px;
+    display:flex; flex-direction:column; gap:6px;
   }
   .card-cat{
     font-family:'JetBrains Mono', monospace;
-    font-size:0.7rem; letter-spacing:0.06em;
+    font-size:0.68rem; letter-spacing:0.06em;
     color:var(--ink-dim); text-transform:uppercase;
   }
-  .card-name{font-size:1.08rem; font-weight:700; line-height:1.5;}
-  .card-desc{
-    font-size:0.92rem; color:var(--ink-dim); flex:1;
-    display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical;
+  .card-name{
+    font-size:0.95rem; font-weight:600; line-height:1.4;
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
     overflow:hidden; text-overflow:ellipsis;
+    min-height:calc(0.95rem * 1.4 * 2);
   }
   .switch-tag{
     display:inline-flex; align-items:center; gap:6px;
@@ -531,14 +592,14 @@
   .switch-tag .sd{width:6px; height:6px; border-radius:50%; background:currentColor;}
 
   .card-foot{
-    display:flex; align-items:center; justify-content:space-between;
-    margin-top:4px;
+    display:flex; align-items:baseline; justify-content:space-between;
+    margin-top:2px; gap:6px;
   }
   .price{
     font-family:'JetBrains Mono', monospace;
-    font-weight:700; font-size:1.2rem;
+    font-weight:700; font-size:1.1rem;
   }
-  .price .baht{font-size:0.82rem; color:var(--ink-dim); font-weight:500; margin-left:2px;}
+  .price .baht{font-size:0.78rem; color:var(--ink-dim); font-weight:500; margin-left:2px;}
   .add-btn{
     background:var(--surface-2);
     border:1px solid var(--line);
@@ -671,13 +732,9 @@
     .filter-btn{flex-shrink:0; padding:11px 16px; font-size:0.85rem;}
 
     .grid{grid-template-columns:1fr 1fr; gap:12px; margin-top:22px;}
-    .card-body{padding:12px 12px 14px; gap:8px;}
-    .card-name{font-size:0.95rem;}
-    .card-desc{font-size:0.82rem;}
-    .price{font-size:1.05rem;}
-    .add-btn{padding:11px 12px; font-size:0.78rem; width:100%;}
-    .card-foot{flex-direction:column; align-items:stretch; gap:8px;}
-    .card-foot .price{text-align:center;}
+    .card-body{padding:9px 10px 10px; gap:5px;}
+    .card-name{font-size:0.88rem;}
+    .price{font-size:1.02rem;}
 
     .cac-btn{width:38px; height:38px; font-size:1.05rem;}
     .close-btn{font-size:1.8rem; padding:8px;}
@@ -1673,7 +1730,7 @@
         <div class="bank-row"><span>ຊື່ບັນຊີ</span><b>ANOUSA LINTHALY</b></div>
         <div class="bank-row"><span>ເລກບັນຊີ</span><b>1001215656492</b> <button class="copy-btn" id="copyAccBtn">ຄັດລອກ</button></div>
       </div>
-      <div class="instruction-box">📸 ເເຄັບສະລິບການໂອນເງິນ ແລ້ວສົ່ງມາຫາຮ້ານທາງ ເບີ 020 95633876 ຫຼື Facebook ຫຼື Instagram ເພື່ອຢືນຢັນຄຳສັ່ງຊື້</div>
+      <div class="instruction-box">📸 ຖ່າຍຮູບໜ້າຈໍນີ້ພ້ອມສະລິບການໂອນເງິນ ແລ້ວສົ່ງມາຫາຮ້ານທາງ ເບີ 020 95633876 ຫຼື Facebook ຫຼື Instagram ເພື່ອຢືນຢັນຄຳສັ່ງຊື້</div>
     
     </div>
     
@@ -1696,7 +1753,7 @@
     </div>
     <div class="field">
       <label>ຫົວຂໍ້ໃຫຍ່ (ຄຳວ່າ AURA ຈະຖືກເນັ້ນສີໃຫ້ອັດຕະໂນມັດ)</label>
-      <input type="text" id="siHeroTitle" placeholder="ຕົວຢ່າງ: ຄີບອດທີ່ມີ AURA ຂອງມັນເອງ">
+      <input type="text" id="siHeroTitle" placeholder="ຕົວຢ່າງ: ແປ້ນພິມທີ່ມີ AURA ຂອງມັນເອງ">
     </div>
     <div class="field">
       <label>ຄຳອະທິບາຍສັ້ນໆ</label>
@@ -1705,19 +1762,19 @@
     <div class="oc-section-title">ຂໍ້ຄວາມອະທິບາຍສະວິດ</div>
     <div class="field">
       <label>ຫົວຂໍ້ຫົວຂໍ້ ຄຳຖາມ</label>
-      <input type="text" id="siLegendTitle" placeholder="ຕົວຢ່າງ: ຂອບໃຈທີ່ອຸດຫນູນເດີ">
+      <input type="text" id="siLegendTitle" placeholder="ຕົວຢ່າງ: ສະວິດແຕ່ລະແບບຕ່າງກັນແນວໃດ?">
     </div>
     <div class="field">
       <label>Linear</label>
-      <input type="text" id="siLegendLinear" placeholder="ຕົວຢ່າງ:  🔴— ກົດແລ້ວລື່ນໆ ງຽບ">
+      <input type="text" id="siLegendLinear" placeholder="ຕົວຢ່າງ: 😌 Linear — ກົດແລ້ວລື່ນໆ ງຽບ">
     </div>
     <div class="field">
       <label>Tactile</label>
-      <input type="text" id="siLegendTactile" placeholder="ຕົວຢ່າງ: 🟤 — ກົດແລ້ວຮູ້ສຶກສະດຸດໜ້ອຍໆ">
+      <input type="text" id="siLegendTactile" placeholder="ຕົວຢ່າງ: 👆 Tactile — ກົດແລ້ວຮູ້ສຶກສະດຸດໜ້ອຍໆ">
     </div>
     <div class="field">
       <label>Clicky</label>
-      <input type="text" id="siLegendClicky" placeholder="ຕົວຢ່າງ:  🔵— ກົດແລ້ວມີສຽງດັງແກັກໆ">
+      <input type="text" id="siLegendClicky" placeholder="ຕົວຢ່າງ: 🔊 Clicky — ກົດແລ້ວມີສຽງດັງແກັກໆ">
     </div>
     <div class="oc-section-title">ຂໍ້ມູນຕິດຕໍ່ຮ້ານ</div>
     <div class="field">
@@ -1763,7 +1820,7 @@
     <div class="oc-section-title">ເງື່ອນໄຂຮ້ານ (ບໍ່ບັງຄັບ)</div>
     <div class="field">
       <label>ນະໂຍບາຍຈັດສົ່ງ / ຄືນສິນຄ້າ ສັ້ນໆ</label>
-      <textarea id="siTerms" placeholder="ຕົວຢ່າງ: ຈັດສົ່ງ 8-12 ມື້ · "></textarea>
+      <textarea id="siTerms" placeholder="ຕົວຢ່າງ: ຈັດສົ່ງ 2-5 ວັນ · ຄືນສິນຄ້າໄດ້ພາຍໃນ 3 ວັນຖ້າສິນຄ້າມີບັນຫາ"></textarea>
     </div>
     <div class="oc-section-title">Google Analytics (ບໍ່ບັງຄັບ)</div>
     <div class="field">
@@ -1780,7 +1837,7 @@
 <div class="modal-overlay" id="catModalOverlay">
   <div class="modal">
     <h3>🏷️ ຈັດການໝວດໝູ່ສິນຄ້າ</h3>
-    <p class="pin-note">ແກ້ໄຂຊື່ ລົບ ຫຼື ເພີ່ມໝວດໝູ່ໄດ້ເອງ (ລູກຄ້າຈະເຫັນຊື່ທີ່ນີ້ເປັນແຖບກັ່ນຕອງເທິງໜ້າຮ້ານ)</p>
+    <p class="pin-note">ແກ້ໄຂຊື່ ລຶບ ຫຼື ເພີ່ມໝວດໝູ່ໄດ້ເອງ (ລູກຄ້າຈະເຫັນຊື່ທີ່ນີ້ເປັນແຖບກັ່ນຕອງເທິງໜ້າຮ້ານ)</p>
     <div id="catList">
     <div class="cat-row" data-idx="0">
       <input type="text" class="cat-label-input" value="⌨️ ແປ້ນພິມ" placeholder="ຕົວຢ່າງ: ⌨️ ແປ້ນພິມ">
@@ -1893,6 +1950,48 @@
 </div>
 
 <div class="toast" id="toast">ບັນທຶກໝວດໝູ່ແລ້ວ ✅</div>
+
+<div class="product-page" id="productPage">
+  <div class="pp-header">
+    <button class="pp-icon-btn" id="ppBack" aria-label="ກັບຄືນ">←</button>
+    <div class="pp-header-actions">
+      <button class="pp-icon-btn" id="ppWishlist" aria-label="ຖືກໃຈ">🤍</button>
+      <button class="pp-icon-btn" id="ppShare" aria-label="ແຊຣ໌">🔗</button>
+    </div>
+  </div>
+  <div class="pp-scroll" id="ppScroll">
+    <div class="pp-media">
+      <span class="stock-tag low" id="ppStock" style="display:none;"></span>
+      <img id="ppImage" src="" alt="">
+    </div>
+    <div class="pp-body">
+      <span class="pp-cat" id="ppCat"></span>
+      <h1 class="pp-name" id="ppName"></h1>
+      <div class="pp-price-row">
+        <span class="price" id="ppPrice"></span>
+        <span class="sold-tag" id="ppSold" style="display:none;"></span>
+      </div>
+      <span class="switch-tag" id="ppSwitchTag" style="display:none;"><span class="sd"></span><span id="ppSwitchLabel"></span></span>
+      <div class="pp-section-title">ລາຍລະອຽດສິນຄ້າ</div>
+      <p class="pp-desc" id="ppDesc"></p>
+      <button class="review-badge" id="ppReviewBtn" style="margin-top:6px;"></button>
+    </div>
+    <div class="pp-related" id="ppRelatedWrap">
+      <div class="pp-section-title" style="padding:0 16px;">ສິນຄ້າທີ່ທ່ານອາດຈະມັກ</div>
+      <div class="grid" id="ppRelatedGrid" style="padding:14px 16px 0;"></div>
+    </div>
+    <div style="height:90px;"></div>
+  </div>
+  <div class="pp-footer">
+    <div class="pp-qty" id="ppQtyWrap">
+      <button id="ppQtyMinus" aria-label="ຫຼຸດຈຳນວນ">−</button>
+      <span id="ppQtyVal">1</span>
+      <button id="ppQtyPlus" aria-label="ເພີ່ມຈຳນວນ">+</button>
+    </div>
+    <button class="btn-primary" id="ppAddBtn" style="flex:1;">+ ໃສ່ກະຕ່າ</button>
+  </div>
+</div>
+
 
 <script type="application/json" id="productData">[
   {
@@ -2158,7 +2257,7 @@
 ]</script>
 <script type="application/json" id="pinData">{"pinHash":"f20d84bdd5c952419bc98b28b9c81b56e335946a98ef7e0ba2ff14f9b1599e95"}</script>
 <script type="application/json" id="shopInfoData">{
-  "hours": "ເປີດທຸກມື້ 24ຊົ່ວໂມງ",
+  "hours": "ເປີດທຸກມື້ 7:00–23:00",
   "phone": "020 95633876",
   "facebook": "https://www.facebook.com/share/19KBz44WE8/?mibextid=wwXIfr",
   "instagram": "https://www.instagram.com/a_.liuiuu?igsh=cWRsN296Nnllc25n&utm_source=qr",
@@ -2166,16 +2265,16 @@
   "bankName": "ທະນາຄານການຄ້າ BCEL",
   "bankAccName": "ANOUSA LINTHALY",
   "bankAccNo": "1001215656492",
-  "terms": "ເຄື່ອງເປັນເຄື່ອງພີອໍເດິ 7-12ມື້ ບາງເຄື່ອງກະພ້ອມສົ່ງ\n(ໃນອານາຄົດແອັດກະຢາກໃຫ້ມີເຄື່ອງພ້ອມສົ່ງທຸກຢ່າງແຕ່ຕອນນິແອັດຍັງບໍ່ມີງົບເທື່ອ ຝາກຊັບພ໋ອດແອັດແນ່ເດີ)",
+  "terms": "ເຄື່ອງເປັນເຄື່ອງພີອໍເດິ 8-12ມື້ ບາງເຄື່ອງກະພ້ອມສົ່ງ\n(ໃນອານາຄົດແອັດກະຢາກໃຫ້ມີເຄື່ອງພ້ອມສົ່ງທຸກຢ່າງແຕ່ຕອນນິແອັດຍັງບໍ່ມີງົບເທື່ອ ຝາກຊັບພ໋ອດແອັດແນ່ເດີ)",
   "gaId": "",
   "qrImage": "images/img-021-d948d59ca17d.jpg",
   "heroEyebrow": "MECHANICAL KEYBOARD SHOP",
-  "heroTitle": "ຄີບອດທີ່ມີ AURA ຂອງມັນເອງ",
-  "heroDesc": "ຮ້ານຂາຍຄີບອດ ສະວິດ ຄີແຄັບ ແລະ ອຸປະກອນຕົກແຕ່ງໂຕະ. ແລະອື້ນໆ🙂",
+  "heroTitle": "ແປ້ນພິມທີ່ມີ AURA ຂອງມັນເອງ",
+  "heroDesc": "ຮ້ານຂາຍແປ້ນພິມ ສະວິດ ຝາແປ້ນ ແລະ ອຸປະກອນຕົກແຕ່ງໂຕະ. ເລືອກງ່າຍໆ ເບິ່ງລາຄາໄດ້ເລີຍ ບໍ່ຕ້ອງເປັນຜູ້ຊ່ຽວຊານກໍ່ຊື້ໄດ້ 🙂",
   "legendTitle": "ສະວິດແຕ່ລະແບບຕ່າງກັນແນວໃດ?",
-  "legendLinear": " 🔴— ກົດແລ້ວລື່ນໆ ງຽບ",
-  "legendTactile": " 🟤— ກົດແລ້ວຮູ້ສຶກສະດຸດໜ້ອຍໆ",
-  "legendClicky": " 🔵 — ກົດແລ້ວມີສຽງດັງແກັກໆ"
+  "legendLinear": "😌 Linear — ກົດແລ້ວລື່ນໆ ງຽບ",
+  "legendTactile": "👆 Tactile — ກົດແລ້ວຮູ້ສຶກສະດຸດໜ້ອຍໆ",
+  "legendClicky": "🔊 Clicky — ກົດແລ້ວມີສຽງດັງແກັກໆ"
 }</script>
 <script>
 const STORAGE_KEY = 'aura_board_products_v1';
@@ -2255,7 +2354,7 @@ function renderFooter(){
   const parts = [];
   if(shopInfo.hours) parts.push(shopInfo.hours);
   if(shopInfo.phone) parts.push(`ໂທ ${shopInfo.phone}`);
-  if(shopInfo.manager) parts.push(`ຮ້ານຂອງ: ${shopInfo.manager}`);
+  if(shopInfo.manager) parts.push(`ຜູ້ຈັດການຮ້ານ: ${shopInfo.manager}`);
   document.getElementById('footerInfoLine').textContent = parts.join(' · ') || 'ຍັງບໍ່ໄດ້ໃສ່ຂໍ້ມູນຮ້ານ';
 
   const termsEl = document.getElementById('footerTerms');
@@ -2287,9 +2386,9 @@ function loadGoogleAnalytics(){
 }
 
 const defaultCategories = [
-  {key:"keyboard", label:"⌨️ ຄີບອດ"},
+  {key:"keyboard", label:"⌨️ ແປ້ນພິມ"},
   {key:"switch", label:"◆ ສະວິດ"},
-  {key:"keycap", label:"⌷ ຄີແຄັບ"},
+  {key:"keycap", label:"⌷ ຝາແປ້ນ"},
   {key:"accessory", label:"▭ ອຸປະກອນເສີມ"},
 ];
 const CAT_KEY = 'aura_board_categories_v1';
@@ -2414,22 +2513,13 @@ function renderReviewBadge(p){
   return `<button class="review-badge" data-id="${p.id}">⭐ ${avg} <span class="rv-count">(${count} ຣີວິວ)</span></button>`;
 }
 
-function renderProducts(){
-  const grid = document.getElementById('productGrid');
-  const term = (searchTerm||'').trim().toLowerCase();
-  const list = products.filter(p => {
-    const matchCat = activeFilter==="all" || p.cat===activeFilter;
-    const matchSearch = !term || p.name.toLowerCase().includes(term) || (p.desc && p.desc.toLowerCase().includes(term));
-    return matchCat && matchSearch;
-  });
-  document.getElementById('resultCount').textContent = `ສະແດງ ${list.length} ລາຍການ`;
-  grid.innerHTML = list.map(p=>{
-    const isSoldOut = p.stock === 'SOLDOUT';
-    return `
-    <div class="card">
+function cardHTML(p){
+  const isSoldOut = p.stock === 'SOLDOUT';
+  return `
+    <div class="card" data-id="${p.id}">
       <div class="card-admin-controls ${isAdmin?'show':''}">
         <button class="cac-btn edit" data-id="${p.id}" title="ແກ້ໄຂ">✏️</button>
-        <button class="cac-btn del" data-id="${p.id}" title="ລົບ">🗑️</button>
+        <button class="cac-btn del" data-id="${p.id}" title="ລຶບ">🗑️</button>
       </div>
       <div class="card-media">
         ${isSoldOut ? `<span class="stock-tag low" style="background:rgba(198,82,75,0.85); border-color:var(--linear);">ສິນຄ້າໝົດ</span>` : (p.stock ? `<span class="stock-tag low">${esc(p.stock)}</span>` : "")}
@@ -2442,25 +2532,19 @@ function renderProducts(){
       <div class="card-body">
         <span class="card-cat">${esc(p.catLabel)}</span>
         <span class="card-name">${esc(p.name)}</span>
-        <span class="card-desc">${esc(p.desc)}</span>
-        ${p.switchType ? `<span class="switch-tag ${p.switchType}"><span class="sd"></span>${switchLabel[p.switchType]}</span>` : ""}
-        ${p.sold ? `<span class="sold-tag">🔥 ຂາຍແລ້ວ ${p.sold} ອັນ</span>` : ""}
-        ${renderReviewBadge(p)}
         <div class="card-foot">
           <span class="price">${p.price.toLocaleString('lo-LA')}<span class="baht">ກີບ</span></span>
-          ${isSoldOut
-            ? `<button class="add-btn" disabled style="opacity:0.5; cursor:not-allowed;">ສິນຄ້າໝົດ</button>`
-            : `<button class="add-btn" data-id="${p.id}">+ ໃສ່ກະຕ່າ</button>`}
+          ${p.sold ? `<span class="sold-tag">🔥 ຂາຍແລ້ວ ${p.sold}</span>` : ""}
         </div>
       </div>
     </div>
-  `;}).join("") + `<div class="add-card ${isAdmin?'show':''}" id="addCardBtn"><span class="plus">+</span><span>ເພີ່ມສິນຄ້າໃໝ່</span></div>`;
-
-  grid.querySelectorAll('.review-badge').forEach(btn=>{
-    btn.addEventListener('click', ()=> openReviewModal(Number(btn.dataset.id)));
+  `;
+}
+function wireCardEvents(container){
+  container.querySelectorAll('.card').forEach(card=>{
+    card.addEventListener('click', ()=> openProductPage(Number(card.dataset.id)));
   });
-
-  grid.querySelectorAll('.wishlist-btn').forEach(btn=>{
+  container.querySelectorAll('.wishlist-btn').forEach(btn=>{
     btn.addEventListener('click', (e)=>{
       e.stopPropagation();
       const id = Number(btn.dataset.id);
@@ -2470,8 +2554,7 @@ function renderProducts(){
       showToast(nowActive ? 'ເພີ່ມໃນລາຍການທີ່ຖືກໃຈແລ້ວ ❤️' : 'ລຶບອອກຈາກລາຍການທີ່ຖືກໃຈແລ້ວ');
     });
   });
-
-  grid.querySelectorAll('.share-btn').forEach(btn=>{
+  container.querySelectorAll('.share-btn').forEach(btn=>{
     btn.addEventListener('click', (e)=>{
       e.stopPropagation();
       const id = Number(btn.dataset.id);
@@ -2490,39 +2573,179 @@ function renderProducts(){
       shareProductLink(shareUrl, `${p.name} — AURA BOARD`, shareText);
     });
   });
-
-  grid.querySelectorAll('.add-btn').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      const id = Number(btn.dataset.id);
-      cart[id] = (cart[id]||0)+1;
-      updateCartUI();
-      btn.textContent = "✓ ໃສ່ແລ້ວ";
-      btn.classList.add('added');
-      setTimeout(()=>{
-        btn.textContent = "+ ໃສ່ກະຕ່າ";
-        btn.classList.remove('added');
-      }, 900);
-    });
+  container.querySelectorAll('.cac-btn.edit').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{ e.stopPropagation(); openModal(Number(btn.dataset.id)); });
   });
-
-  grid.querySelectorAll('.cac-btn.edit').forEach(btn=>{
-    btn.addEventListener('click', ()=> openModal(Number(btn.dataset.id)));
-  });
-  grid.querySelectorAll('.cac-btn.del').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
+  container.querySelectorAll('.cac-btn.del').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      e.stopPropagation();
       const id = Number(btn.dataset.id);
       const p = products.find(x=>x.id===id);
       openConfirmModal(`ລຶບ "${p.name}" ອອກຈາກຮ້ານບໍ?`, ()=>{
         products = products.filter(x=>x.id!==id);
         saveProducts();
         renderProducts();
-        showToast('ລົບສິນຄ້າແລ້ວ');
+        showToast('ລຶບສິນຄ້າແລ້ວ');
       });
     });
   });
-  const addCardBtn = document.getElementById('addCardBtn');
-  if(addCardBtn) addCardBtn.addEventListener('click', ()=> openModal(null));
 }
+function renderProducts(){
+  const grid = document.getElementById('productGrid');
+  const term = (searchTerm||'').trim().toLowerCase();
+  const list = products.filter(p => {
+    const matchCat = activeFilter==="all" || p.cat===activeFilter;
+    const matchSearch = !term || p.name.toLowerCase().includes(term) || (p.desc && p.desc.toLowerCase().includes(term));
+    return matchCat && matchSearch;
+  });
+  document.getElementById('resultCount').textContent = `ສະແດງ ${list.length} ລາຍການ`;
+  grid.innerHTML = list.map(p=>cardHTML(p)).join("") + `<div class="add-card ${isAdmin?'show':''}" id="addCardBtn"><span class="plus">+</span><span>ເພີ່ມສິນຄ້າໃໝ່</span></div>`;
+
+  wireCardEvents(grid);
+
+  const addCardBtn = document.getElementById('addCardBtn');
+  if(addCardBtn) addCardBtn.addEventListener('click', (e)=>{ e.stopPropagation(); openModal(null); });
+}
+
+/* ---------- PRODUCT DETAIL PAGE ---------- */
+let ppProductId = null;
+let ppQty = 1;
+
+function renderRelatedProducts(p){
+  let related = products.filter(x=>x.id!==p.id && x.cat===p.cat);
+  if(related.length < 4){
+    const others = products.filter(x=>x.id!==p.id && x.cat!==p.cat);
+    related = related.concat(others);
+  }
+  related = related.slice(0, 6);
+  const wrap = document.getElementById('ppRelatedWrap');
+  const relGrid = document.getElementById('ppRelatedGrid');
+  if(related.length === 0){ wrap.style.display='none'; return; }
+  wrap.style.display='block';
+  relGrid.innerHTML = related.map(rp=>cardHTML(rp)).join('');
+  wireCardEvents(relGrid);
+}
+
+function openProductPage(id){
+  const p = products.find(x=>x.id===id);
+  if(!p) return;
+  ppProductId = id;
+  ppQty = 1;
+  document.getElementById('ppQtyVal').textContent = '1';
+
+  const imgEl = document.getElementById('ppImage');
+  imgEl.src = p.image || '';
+  imgEl.alt = p.name;
+  document.getElementById('ppCat').textContent = p.catLabel || '';
+  document.getElementById('ppName').textContent = p.name;
+  document.getElementById('ppPrice').innerHTML = `${p.price.toLocaleString('lo-LA')}<span class="baht">ກີບ</span>`;
+
+  const soldEl = document.getElementById('ppSold');
+  if(p.sold){ soldEl.style.display='inline-flex'; soldEl.textContent = `🔥 ຂາຍແລ້ວ ${p.sold} ອັນ`; }
+  else{ soldEl.style.display='none'; }
+
+  const isSoldOut = p.stock === 'SOLDOUT';
+  const stockEl = document.getElementById('ppStock');
+  if(isSoldOut){
+    stockEl.style.display='inline-flex';
+    stockEl.textContent = 'ສິນຄ້າໝົດ';
+    stockEl.style.background = 'rgba(198,82,75,0.85)';
+    stockEl.style.borderColor = 'var(--linear)';
+  } else if(p.stock){
+    stockEl.style.display='inline-flex';
+    stockEl.textContent = p.stock;
+    stockEl.style.background = '';
+    stockEl.style.borderColor = '';
+  } else {
+    stockEl.style.display='none';
+  }
+
+  const switchTagEl = document.getElementById('ppSwitchTag');
+  if(p.switchType){
+    switchTagEl.style.display = 'inline-flex';
+    switchTagEl.className = `switch-tag ${p.switchType}`;
+    document.getElementById('ppSwitchLabel').textContent = switchLabel[p.switchType] || p.switchType;
+  } else {
+    switchTagEl.style.display = 'none';
+  }
+
+  document.getElementById('ppDesc').textContent = p.desc || '';
+  const reviewBtn = document.getElementById('ppReviewBtn');
+  reviewBtn.innerHTML = renderReviewBadge(p);
+  reviewBtn.onclick = ()=> openReviewModal(p.id);
+
+  const wishBtn = document.getElementById('ppWishlist');
+  wishBtn.textContent = isWishlisted(p.id) ? '❤️' : '🤍';
+  wishBtn.classList.toggle('active', isWishlisted(p.id));
+
+  const addBtn = document.getElementById('ppAddBtn');
+  const qtyWrap = document.getElementById('ppQtyWrap');
+  if(isSoldOut){
+    addBtn.textContent = 'ສິນຄ້າໝົດ';
+    addBtn.disabled = true;
+    addBtn.style.opacity = '0.5';
+    qtyWrap.style.visibility = 'hidden';
+  } else {
+    addBtn.textContent = '+ ໃສ່ກະຕ່າ';
+    addBtn.disabled = false;
+    addBtn.style.opacity = '1';
+    qtyWrap.style.visibility = 'visible';
+  }
+
+  renderRelatedProducts(p);
+
+  document.getElementById('productPage').classList.add('open');
+  document.getElementById('ppScroll').scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+}
+
+function closeProductPage(){
+  document.getElementById('productPage').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('ppBack').addEventListener('click', closeProductPage);
+
+document.getElementById('ppWishlist').addEventListener('click', ()=>{
+  if(ppProductId == null) return;
+  const nowActive = toggleWishlist(ppProductId);
+  const btn = document.getElementById('ppWishlist');
+  btn.textContent = nowActive ? '❤️' : '🤍';
+  btn.classList.toggle('active', nowActive);
+  showToast(nowActive ? 'ເພີ່ມໃນລາຍການທີ່ຖືກໃຈແລ້ວ ❤️' : 'ລຶບອອກຈາກລາຍການທີ່ຖືກໃຈແລ້ວ');
+});
+
+document.getElementById('ppShare').addEventListener('click', ()=>{
+  if(ppProductId == null) return;
+  const p = products.find(x=>x.id===ppProductId);
+  if(!p) return;
+  if(location.protocol === 'file:'){
+    showToast('ຟັງຊັນແຊຣ໌ໃຊ້ໄດ້ຫຼັງຈາກອັບໂຫລດຂຶ້ນເວັບຈິງແລ້ວເທົ່ານັ້ນ');
+    return;
+  }
+  const shareUrl = `${location.origin}${location.pathname}?product=${p.id}`;
+  const shareText = `${p.name} ລາຄາ ${p.price.toLocaleString('lo-LA')} ກີບ`;
+  shareProductLink(shareUrl, `${p.name} — AURA BOARD`, shareText);
+});
+
+document.getElementById('ppQtyMinus').addEventListener('click', ()=>{
+  ppQty = Math.max(1, ppQty - 1);
+  document.getElementById('ppQtyVal').textContent = String(ppQty);
+});
+document.getElementById('ppQtyPlus').addEventListener('click', ()=>{
+  ppQty = Math.min(99, ppQty + 1);
+  document.getElementById('ppQtyVal').textContent = String(ppQty);
+});
+
+document.getElementById('ppAddBtn').addEventListener('click', ()=>{
+  if(ppProductId == null) return;
+  cart[ppProductId] = (cart[ppProductId]||0) + ppQty;
+  updateCartUI();
+  const btn = document.getElementById('ppAddBtn');
+  const original = '+ ໃສ່ກະຕ່າ';
+  btn.textContent = '✓ ໃສ່ແລ້ວ';
+  setTimeout(()=>{ btn.textContent = original; }, 900);
+});
 
 function updateCartUI(){
   const ids = Object.keys(cart).filter(id => cart[id] > 0);
@@ -2616,10 +2839,10 @@ document.getElementById('adminFab').addEventListener('click', ()=>{
   if(!effectiveHash){
     // ກໍລະນີນີ້ຈະເກີດຂຶ້ນສະເພາະຄັ້ງທຳອິດສຸດທີ່ຍັງບໍ່ເຄີຍຕັ້ງລະຫັດຜ່ານມາກ່ອນເລີຍ (ບໍ່ມີໃນເວັບທີ່ Export ອອກໄປແລ້ວ)
     openPinModal({
-      title: 'ບໍ່ມີຫຍັງ',
-      note: 'ບໍ່ມີຫຍັງ',
+      title: '🔒 ຕັ້ງລະຫັດຜ່ານຄັ້ງທຳອິດ',
+      note: 'ນີ້ແມ່ນຄັ້ງທຳອິດທີ່ເຂົ້າໂໝດແກ້ໄຂ ຕັ້ງລະຫັດຜ່ານ (ຢ່າງໜ້ອຍ 4 ຫຼັກ) ແລ້ວຈື່ໄວ້ສຳລັບຄັ້ງຕໍ່ໄປ',
       onSubmit: async (val)=>{
-        if(!val || val.trim().length < 4){ showToast('ບໍ່ມີຫຍັງ'); return false; }
+        if(!val || val.trim().length < 4){ showToast('ລະຫັດຜ່ານຕ້ອງມີຢ່າງໜ້ອຍ 4 ຫຼັກ'); return false; }
         const hash = await sha256Hex(val.trim());
         localStorage.setItem(PIN_KEY, hash);
         setAdmin(true);
@@ -2631,8 +2854,8 @@ document.getElementById('adminFab').addEventListener('click', ()=>{
   }
 
   openPinModal({
-    title: 'ບໍ່ມີຫຍັງ',
-    note: 'ບໍ່ມີຫຍັງ',
+    title: '🔒 ໃສ່ລະຫັດຜ່ານ',
+    note: 'ໃສ່ລະຫັດຜ່ານເຈົ້າຂອງຮ້ານເພື່ອເຂົ້າໂໝດແກ້ໄຂ',
     onSubmit: async (val)=>{
       if(!val) { showToast('ລະຫັດຜ່ານບໍ່ຖືກຕ້ອງ'); return false; }
       const hash = await sha256Hex(val.trim());
@@ -2822,7 +3045,7 @@ function renderCheckoutStepForm(){
     </div>
     <div class="field">
       <label>ທີ່ຢູ່ຈັດສົ່ງ / ໝາຍເຫດ</label>
-      <textarea id="coAddress" placeholder="ບ້ານ, ເມືອງ, ແຂວງ ສາຂາຂົນສົ່ງທີ່ໄກ້ບ້ານ ">${savedInfo.address.replace(/</g,'&lt;')}</textarea>
+      <textarea id="coAddress" placeholder="ບ້ານ, ເມືອງ, ແຂວງ ຫຼື ຈຸດນັດຮັບເຄື່ອງ">${savedInfo.address.replace(/</g,'&lt;')}</textarea>
     </div>
     ${(savedInfo.name || savedInfo.phone || savedInfo.address) ? `<div style="text-align:right; margin-top:-10px; margin-bottom:14px;"><button type="button" id="coClearSaved" style="background:none; border:none; color:var(--ink-dim); font-size:0.78rem; text-decoration:underline; cursor:pointer;">ລຶບຂໍ້ມູນທີ່ບັນທຶກໄວ້</button></div>` : ''}
     <div class="field">
@@ -3178,7 +3401,7 @@ function renderCatList(){
   el.innerHTML = editingCategories.map((c, i) => `
     <div class="cat-row" data-idx="${i}">
       <input type="text" class="cat-label-input" value="${c.label.replace(/"/g,'&quot;')}" placeholder="ຕົວຢ່າງ: ⌨️ ແປ້ນພິມ">
-      <button class="cat-del" data-idx="${i}" title="ລົບ">🗑️</button>
+      <button class="cat-del" data-idx="${i}" title="ລຶບ">🗑️</button>
     </div>
   `).join('');
   el.querySelectorAll('.cat-del').forEach(btn=>{
@@ -3235,7 +3458,7 @@ function renderReviewList(p){
     <div class="review-item">
       <div class="rv-head">
         <span class="rv-name">${esc(r.name)}</span>
-        ${isAdmin ? `<button class="rv-del" data-idx="${i}">🗑️ ລົບ</button>` : ''}
+        ${isAdmin ? `<button class="rv-del" data-idx="${i}">🗑️ ລຶບ</button>` : ''}
       </div>
       <div class="rv-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)}</div>
       ${r.text ? `<div class="rv-text">${esc(r.text)}</div>` : ''}
@@ -3250,7 +3473,7 @@ function renderReviewList(p){
           saveProducts();
           renderReviewList(p);
           renderProducts();
-          showToast('ລົບຣີວິວແລ້ວ');
+          showToast('ລຶບຣີວິວແລ້ວ');
         });
       });
     });
@@ -3372,7 +3595,7 @@ function renderWishlistModal(){
         <span class="wl-name">${esc(p.name)}</span>
         <span class="wl-price">${p.price.toLocaleString('lo-LA')} ກີບ</span>
       </div>
-      <button class="wl-remove" data-id="${p.id}">🗑️ ລົບ</button>
+      <button class="wl-remove" data-id="${p.id}">🗑️ ລຶບ</button>
     </div>
   `).join('');
   list.querySelectorAll('.wl-remove').forEach(btn=>{
@@ -3417,7 +3640,7 @@ function renderOrderLogList(){
     listEl.innerHTML = `<div class="oh-empty">${term ? 'ບໍ່ພົບອໍເດີທີ່ຄົ້ນຫາ' : 'ຍັງບໍ່ມີອໍເດີທີ່ບັນທຶກໄວ້'}</div>`;
     return;
   }
-  const statusLabel = {pending:'⏳ ລໍຖ້າໂອນ', shipped:'🚚 ຈັດສົ່ງແລ້ວ', done:'✅ ສຳເລັດແລ້ວ'};
+  const statusLabel = {pending:'⏳ ລໍຖ້າໂອນ', shipped:'🚚 ຈັດສົ່ງແລ້ວ', done:'✅ ສຳເລັດ'};
   listEl.innerHTML = filtered.map(o=>{
     const d = new Date(o.timestamp);
     const dateStr = d.toLocaleDateString('lo-LA', {year:'numeric', month:'2-digit', day:'2-digit'}) + ' ' + d.toLocaleTimeString('lo-LA', {hour:'2-digit', minute:'2-digit'});
@@ -3433,12 +3656,12 @@ function renderOrderLogList(){
           <span class="ol-total">${(o.total||0).toLocaleString('lo-LA')} ກີບ</span>
           <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
             <button class="ol-status" data-status="${status}" data-id="${o.id}">${statusLabel[status]}</button>
-            <button class="ol-del" data-id="${o.id}">🗑️ ລົບ</button>
+            <button class="ol-del" data-id="${o.id}">🗑️ ລຶບ</button>
           </div>
         </div>
       </div>
     `;
-  }).join('');                                                                                                 
+  }).join('');
 
   listEl.querySelectorAll('.ol-status').forEach(btn=>{
     btn.addEventListener('click', ()=>{
